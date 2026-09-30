@@ -5,7 +5,7 @@ export default function UserLayout({ children }) {
     <div className="min-h-screen bg-gray-50">
       <div className="flex min-h-screen">
         <Sidebar role="user" />
-        <main className="ml-64 min-h-screen flex-1">
+        <main className="min-h-screen min-w-0 flex-1 pt-16 md:ml-64 md:pt-0">
           {children}
         </main>
       </div>

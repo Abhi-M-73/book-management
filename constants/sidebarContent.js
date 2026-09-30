@@ -9,22 +9,22 @@ import {
 export const userMenu = [
     {
         label: "Dashboard",
-        href: "/dashboard",
+        href: "/user",
         icon: LayoutDashboard,
     },
     {
         label: "My Books",
-        href: "/dashboard/my-books",
+        href: "/user/my-books",
         icon: BookOpen,
     },
     {
         label: "Borrowed Books",
-        href: "/dashboard/borrowed-books",
+        href: "/user/borrowed-books",
         icon: BookMarked,
     },
     {
         label: "Profile",
-        href: "/dashboard/profile",
+        href: "/user/profile",
         icon: User,
     },
 ];
@@ -32,12 +32,12 @@ export const userMenu = [
 export const adminMenu = [
     {
         label: "Dashboard",
-        href: "/dashboard",
+        href: "/admin",
         icon: LayoutDashboard,
     },
     {
         label: "Books",
-        href: "/dashboard/books",
+        href: "/admin/books",
         icon: BookOpen,
     },
     //   {

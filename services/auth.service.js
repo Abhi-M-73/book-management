@@ -7,13 +7,11 @@ export const register = async (name, email, password) => {
   }
 
   const userExist = await User.findOne({ email });
-
   if (userExist) {
     throw new Error("User already exists");
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
-
   const user = await User.create({
     name,
     email,
@@ -21,9 +19,7 @@ export const register = async (name, email, password) => {
   });
 
   const userObj = user.toObject();
-
   delete userObj.password;
-
   return userObj;
 };
 
@@ -33,28 +29,25 @@ export const login = async (email, password) => {
   }
 
   const user = await User.findOne({ email }).select("+password");
-
   if (!user) {
     throw new Error("Invalid email or password");
   }
 
-  const isPasswordMatch = await bcrypt.compare(
-    password,
-    user.password
-  );
-
+  const isPasswordMatch = await bcrypt.compare(password, user.password);
   if (!isPasswordMatch) {
     throw new Error("Invalid email or password");
   }
 
   const token = await user.generateAuthToken();
-
   const userObj = user.toObject();
-
   delete userObj.password;
 
   return {
     user: userObj,
     token,
   };
+};
+
+export const logout = async () => {
+  return true;
 };
