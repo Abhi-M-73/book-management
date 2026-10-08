@@ -1,5 +1,8 @@
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
+import { getCurrentUser } from "@/lib/getCurrentUser";
+import Admin from "@/models/Admin";
+import { NextResponse } from "next/server";
 
 export const register = async (name, email, password) => {
   if (!name || !email || !password) {
@@ -50,4 +53,38 @@ export const login = async (email, password) => {
 
 export const logout = async () => {
   return true;
+};
+
+export const getProfile = async () => {
+  const user = getCurrentUser();
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return user;
+}
+
+export const adminLogin = async (email, password) => {
+  if (!email || !password) {
+    return NextResponse.json({ success: false, message: "Email and password are required" });
+  }
+
+  const admin = await Admin.findOne({ email }).select("+password");
+  if (!admin) {
+    return NextResponse.json({ success: false, message: "Invalid email or password" });
+  }
+
+  const isPasswordMatch = await bcrypt.compare(password, admin.password);
+  if (!isPasswordMatch) {
+    return NextResponse.json({ success: false, message: "Invalid email or password" });
+  }
+
+  const token = await admin.generateAuthToken();
+  const adminObj = admin.toObject();
+  delete adminObj.password;
+
+  return {
+    admin: adminObj,
+    token
+  };
 };
