@@ -23,6 +23,9 @@ const bookSchema = new mongoose.Schema({
     publishedYear: {
         type: Number,
     },
+    releaseDate: {
+        type: Date,
+    },
     totalCopies: {
         type: Number,
         required: true,
